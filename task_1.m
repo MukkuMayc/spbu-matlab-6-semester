@@ -64,7 +64,7 @@ end
 % и будем сравнивать её с нулём
 % cos(x) - sqrt(1 - sin(x)^2) = 0
 function check_sin_x()
-    func = @(x) sin(x)./abs(sin(x)).*cos(x) - sqrt(1 - (sin(x)).^2);
+    func = @(x) cos(x) - sqrt(1 - (sin(x)).^2);
     x_vec = linspace(0, pi, 1000);
     plot(x_vec, func(x_vec));
 end
