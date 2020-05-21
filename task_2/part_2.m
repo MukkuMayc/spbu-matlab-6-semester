@@ -10,6 +10,7 @@
 % | 0   1|   |y1|
 % |-1  -v| * |y2|
 
+without_friction();
 with_friction();
 
 
@@ -22,6 +23,7 @@ function without_friction()
     y_0_start = [0; 0.1];
     y_0_end = [0; 1];
     
+    subplot(2, 1, 1);
     hold on
     for i = 0:9
         y_0 = (9 - i) / 9 * y_0_start + i / 9 * y_0_end;
@@ -29,6 +31,7 @@ function without_friction()
         plot(t, y(1, :), 'DisplayName', "y'(0) = " + num2str(y_0(2)));
     end
     legend
+    title("Без трения");
     hold off
 end
 
@@ -41,7 +44,7 @@ function with_friction()
     y_0 = [0; 1];
     v = linspace(0, 1, 10);
     
-    
+    subplot(2, 1, 2);
     hold on
     for i = 1:10
         v_curr = v(i);
@@ -50,5 +53,6 @@ function with_friction()
         plot(t, y(1, :), 'DisplayName', "v = " + num2str(v_curr));
     end
     legend
+    title("С трением");
     hold off
 end
