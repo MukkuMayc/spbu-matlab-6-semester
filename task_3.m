@@ -36,7 +36,7 @@ end
 
 % эта функция методом трапеций вычисляет интеграл J(T)
 % по заданным k_d, k_p, h
-function res = J(K, z_0, h, tspan)
+function integral = J(K, z_0, h, tspan)
     global m; global g;
     [t, z] = z_sol(K, z_0, h, tspan);
     z_der = z(2, :);
@@ -45,7 +45,7 @@ function res = J(K, z_0, h, tspan)
     T_1 = T(z, z_der, K, h);
 %   проверим ограничения на T, если они не выполняются, то возвращаем nan
     if any(T_1 < 0) || any(T_1 > 4 * m * g)
-        res = nan;
+        integral = nan;
         return;
     end
 
@@ -53,11 +53,8 @@ function res = J(K, z_0, h, tspan)
 %   будем использовать их для нахождения интеграла
     f = (z - h).^2 + z_der.^2 + T(z, z_der, K, h).^2;
     
-%   на отрезках посчитаем значения интеграла методом трапеций
-    integrals = (f(1:end-1) + f(2:end)) .* (t(2:end) - t(1:end-1)) ./ 2;
-    
-%   и теперь сложим эти значения
-    res = sum(integrals);
+%   вычислим интеграл методом трапеций
+    integral = trapz(t, f);
 end
 
 % здесь мы минимизируем значение интеграла, изменяя параметры k_d и k_p
